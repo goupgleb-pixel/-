@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ORBITA — цифровое агентство</title>
+  <meta name="description" content="ORBITA создаёт цифровой опыт на стыке дизайна и технологий.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+
+  <header class="top">
+    <a class="logo" href="#hero">ORBITA</a>
+    <nav class="top__nav">
+      <a href="#contact">Давайте поговорим</a>
+      <a href="#team">Вакансии</a>
+      <a href="#expertise">IT</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
+    </nav>
+  </header>
+
+  <div class="menu" id="menu">
+    <a href="#hero">Главная</a>
+    <a href="#solutions">Решения</a>
+    <a href="#expertise">Экспертиза</a>
+    <a href="#team">Команда</a>
+    <a href="#contact">Контакты</a>
+  </div>
+
+  <main>
+    <section class="sec hero" id="hero">
+      <div class="hero__text">
+        <h1>
+          <span class="outline">Прокачай</span>
+          <span>свой</span>
+          <span>бренд</span>
+        </h1>
+        <p>Мы создаём <b>цифровой опыт</b> на стыке <b>дизайна</b> и <b>технологий</b>, помогая клиентам <b>представить будущее</b> уже сегодня.</p>
+      </div>
+      <div class="scroll-hint">Листайте вниз</div>
+    </section>
+
+    <section class="sec solutions" id="solutions">
+      <h2 class="big">Решения</h2>
+      <p>Мы усиливаем бренды продуктами, которые динамически масштабируются под уникальные требования каждого проекта.</p>
+    </section>
+
+    <section class="sec expertise" id="expertise">
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track" id="marquee">
+          <span>Направления</span><span class="outline">экспертизы</span>
+          <span>Направления</span><span class="outline">экспертизы</span>
+          <span>Направления</span><span class="outline">экспертизы</span>
+          <span>Направления</span><span class="outline">экспертизы</span>
+        </div>
+      </div>
+      <h2 class="visually-hidden">Направления экспертизы</h2>
+      <div class="cols">
+        <div class="col">
+          <h3>Стратегия</h3>
+          <ul>
+            <li>Креативное направление</li>
+            <li>Технологическая стратегия</li>
+            <li>Исследования и разработка</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Креатив</h3>
+          <ul>
+            <li>Арт-дирекшн</li>
+            <li>UI/UX-дизайн</li>
+            <li>Моушн-дизайн</li>
+            <li>Иллюстрация</li>
+            <li>Графика</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Технологии</h3>
+          <ul>
+            <li>WebGL-разработка</li>
+            <li>Веб-разработка</li>
+            <li>Unity / Unreal</li>
+            <li>VR / AR</li>
+            <li>Искусственный интеллект</li>
+            <li>Блокчейн</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Продакшн</h3>
+          <ul>
+            <li>3D-моделирование</li>
+            <li>3D-анимация</li>
+            <li>Видеопродакшн</li>
+            <li>Фотопродакшн</li>
+            <li>Стилисты</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec team" id="team">
+      <h2 class="big small">Команда</h2>
+      <ul class="people">
+        <li class="solid"><b>Артём</b><span>Full-stack разработчик</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="outline"><b>Алина</b><span>Креативный директор</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="solid"><b>Матвей</b><span>3D-художник</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="outline"><b>Ирина</b><span>Руководитель проектов</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="solid"><b>Кирилл</b><span>Руководитель CGI и инноваций</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="outline"><b>Софья</b><span>Креативный разработчик</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="solid"><b>Денис</b><span>IT-эксперт, full-stack разработчик</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="outline"><b>Елена</b><span>UI/UX-дизайнер</span><a href="#" aria-label="Профиль">in</a></li>
+        <li class="solid"><b>Роман</b><span>Моушн-дизайнер</span><a href="#" aria-label="Профиль">in</a></li>
+      </ul>
+    </section>
+
+    <section class="sec contact" id="contact">
+      <h2 class="big small"><span class="outline">Давайте</span> поговорим</h2>
+      <a class="mail" href="mailto:hello@orbita.example">hello@orbita.example</a>
+      <footer>© 2026 ORBITA. Все права защищены.</footer>
+    </section>
+  </main>
+
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
