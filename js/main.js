@@ -145,7 +145,7 @@
     'attribute vec3 aPos0; attribute vec3 aPos1; attribute vec3 aPos2; attribute vec3 aPos3;',
     'attribute vec3 aCol0; attribute vec3 aCol1; attribute vec3 aCol2; attribute vec3 aCol3;',
     'attribute vec3 aSeed; attribute float aSize;',
-    'uniform vec4 uW; uniform float uTime; uniform float uBurst; uniform vec3 uMouse; uniform float uPx;',
+    'uniform vec4 uW; uniform float uTime; uniform float uBurst; uniform vec3 uMouse; uniform float uPx; uniform float uClick;',
     'varying vec3 vCol;',
     'void main(){',
     '  vec3 p = aPos0*uW.x + aPos1*uW.y + aPos2*uW.z + aPos3*uW.w;',
@@ -156,15 +156,18 @@
     // лёгкое «дыхание»
     '  p += vec3(sin(uTime*0.6 + aSeed.x*40.0), cos(uTime*0.5 + aSeed.y*40.0), sin(uTime*0.4 + aSeed.z*40.0)) * 0.035;',
     '  vec4 wp = modelMatrix * vec4(p, 1.0);',
-    // отталкивание от курсора
+    // мягкое перемешивание вокруг курсора: завихрение + дрожание, без «дырки»
     '  vec2 d = wp.xy - uMouse.xy;',
     '  float dist = length(d);',
-    '  float f = smoothstep(1.6, 0.0, dist);',
-    '  wp.xy += normalize(d + 0.0001) * f * f * 1.1;',
-    '  wp.z += f * 0.8;',
+    '  float f = smoothstep(1.5, 0.0, dist);',
+    '  float k = f * (0.16 + uClick * 0.5);',
+    '  vec2 perp = vec2(-d.y, d.x) / (dist + 0.001);',
+    '  vec2 jit = vec2(sin(uTime*2.2 + aSeed.x*60.0), cos(uTime*1.9 + aSeed.y*60.0));',
+    '  wp.xy += (perp * (aSeed.z - 0.35) * 1.4 + jit * 0.9 + (aSeed.xy - 0.5) * 1.2) * k;',
+    '  wp.z += (aSeed.z - 0.5) * 2.0 * k;',
     '  vec4 mv = viewMatrix * wp;',
     '  gl_Position = projectionMatrix * mv;',
-    '  gl_PointSize = aSize * uPx * (0.075 + f * 0.05) / -mv.z;',
+    '  gl_PointSize = aSize * uPx * (0.075 + f * 0.015) / -mv.z;',
     '}'
   ].join('\n');
 
@@ -190,7 +193,8 @@
     uTime: { value: 0 },
     uBurst: { value: 0 },
     uMouse: { value: new THREE.Vector3(999, 999, 0) },
-    uPx: { value: 1 }
+    uPx: { value: 1 },
+    uClick: { value: 0 }
   };
   var mat = new THREE.ShaderMaterial({
     vertexShader: vert,
@@ -255,6 +259,10 @@
     mouse.ny = -((t.clientY / window.innerHeight) * 2 - 1);
   }, { passive: true });
 
+  var click = 0;
+  window.addEventListener('pointerdown', function () { click = 1; cursor.classList.add('is-down'); });
+  window.addEventListener('pointerup', function () { cursor.classList.remove('is-down'); });
+
   /* ================= КУРСОР / МЕНЮ / БЕГУЩАЯ СТРОКА ================= */
   var cursor = document.getElementById('cursor');
   var cx = 0, cy = 0;
@@ -314,7 +322,13 @@
     ndc.set(mouse.nx, mouse.ny);
     ray.setFromCamera(ndc, camera);
     ray.ray.intersectPlane(plane, mouseWorld);
-    if (mouseWorld) uniforms.uMouse.value.copy(mouseWorld);
+    if (mouseWorld) {
+      // сглаживаем позицию, чтобы частицы текли за курсором
+      if (uniforms.uMouse.value.x > 900) uniforms.uMouse.value.copy(mouseWorld);
+      else uniforms.uMouse.value.lerp(mouseWorld, 0.18);
+    }
+    click *= Math.pow(0.04, dt);       // волна от клика затухает за ~0.7 с
+    uniforms.uClick.value = click;
 
     // курсор
     cx += (mouse.x - cx) * 0.2;

@@ -50,6 +50,7 @@ ul { list-style: none; }
 }
 .cursor span { width: 6px; height: 6px; border-radius: 50%; background: #fff; }
 .cursor.is-on { opacity: 1; }
+.cursor.is-down { width: 30px; height: 30px; margin: -15px 0 0 -15px; }
 .cursor.is-link { width: 72px; height: 72px; margin: -36px 0 0 -36px; background: rgba(255, 200, 61, .35); }
 @media (hover: none) { .cursor { display: none; } }
 
